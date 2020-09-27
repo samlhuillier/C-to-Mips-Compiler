@@ -1,0 +1,4806 @@
+Nonterminals useless in grammar
+
+    EXPRS
+    SHIFT
+    PAR
+
+
+Terminals unused in grammar
+
+    T_TWOLESS
+    T_TWOGREAT
+    T_DOT
+
+
+Rules useless in grammar
+
+  117 EXPRS: E1 T_COMMA EXPRS
+  118      | E1
+
+
+State 50 conflicts: 16 shift/reduce
+State 81 conflicts: 16 shift/reduce
+State 84 conflicts: 16 shift/reduce
+State 88 conflicts: 16 shift/reduce
+State 94 conflicts: 1 shift/reduce
+State 103 conflicts: 16 shift/reduce, 3 reduce/reduce
+State 129 conflicts: 16 shift/reduce
+State 132 conflicts: 16 shift/reduce
+State 140 conflicts: 1 shift/reduce
+State 156 conflicts: 16 shift/reduce
+State 197 conflicts: 7 shift/reduce
+State 220 conflicts: 1 shift/reduce
+State 221 conflicts: 16 shift/reduce
+State 222 conflicts: 16 shift/reduce
+State 234 conflicts: 16 shift/reduce
+State 235 conflicts: 1 shift/reduce
+State 236 conflicts: 17 shift/reduce
+State 238 conflicts: 1 shift/reduce
+State 248 conflicts: 16 shift/reduce
+State 253 conflicts: 16 shift/reduce
+State 261 conflicts: 1 shift/reduce
+State 262 conflicts: 16 shift/reduce
+State 267 conflicts: 16 shift/reduce
+State 270 conflicts: 16 shift/reduce
+State 273 conflicts: 16 shift/reduce
+State 275 conflicts: 1 shift/reduce
+State 277 conflicts: 16 shift/reduce
+State 281 conflicts: 16 shift/reduce
+
+
+Grammar
+
+    0 $accept: ROOT $end
+
+    1 ROOT: FUNCTIONS
+
+    2 FUNCTIONS: FUNCT
+    3          | FUNCT FUNCTIONS
+    4          | T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL FUNCTIONS
+    5          | T_INT T_VARIABLE T_ASSIGN E1 T_EOL FUNCTIONS
+    6          | T_VARIABLE T_ASSIGN E1 T_EOL FUNCTIONS
+    7          | T_INT T_VARIABLE T_EOL FUNCTIONS
+
+    8 FUNCT: T_INT T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE
+    9      | T_VOID T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE
+   10      | T_INT T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   11      | T_VOID T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   12      | T_INT T_VARIABLE FINALPARAMS T_EOL
+   13      | T_VOID T_VARIABLE FINALPARAMS T_EOL
+   14      | T_INT T_VARIABLE T_LBRACKET T_RBRACKET T_EOL
+   15      | T_VOID T_VARIABLE T_LBRACKET T_RBRACKET T_EOL
+   16      | AN_UNSIGNED T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE
+   17      | AN_UNSIGNED T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   18      | AN_UNSIGNED T_VARIABLE FINALPARAMS T_EOL
+
+   19 LINES: LINE LINES
+   20      | LINE
+
+   21 LINE: T_INT T_VARIABLE T_ASSIGN E1 T_EOL
+   22     | T_VARIABLE T_ASSIGN E1 T_EOL
+   23     | AN_UNSIGNED T_VARIABLE T_ASSIGN E1 T_EOL
+   24     | E1 T_EOL
+   25     | T_INT T_VARIABLE T_EOL
+   26     | T_RETURN E1 T_EOL
+   27     | T_WHILE T_LBRACKET E1 T_RBRACKET LINE
+   28     | T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE
+   29     | T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN T_CLOSE
+   30     | T_IF T_LBRACKET E1 T_RBRACKET LINE
+   31     | T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE LINE
+   32     | T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE T_OPEN LINES T_CLOSE
+   33     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE
+   34     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE LINE
+   35     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+   36     | T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL
+   37     | T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN E1 T_EOL
+   38     | %empty
+   39     | T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET LINE
+   40     | T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET T_OPEN LINES T_CLOSE
+   41     | T_CONT T_EOL
+   42     | T_BREAK T_EOL
+   43     | T_VARIABLE T_PE E1 T_EOL
+   44     | T_VARIABLE T_ME E1 T_EOL
+   45     | T_VARIABLE T_TE E1 T_EOL
+   46     | T_VARIABLE T_DE E1 T_EOL
+   47     | T_VARIABLE T_MODE E1 T_EOL
+   48     | T_VARIABLE T_OE E1 T_EOL
+   49     | T_VARIABLE T_XE E1 T_EOL
+   50     | T_VARIABLE T_AE E1 T_EOL
+   51     | T_VARIABLE T_LSE E1 T_EOL
+   52     | T_VARIABLE T_RSE E1 T_EOL
+   53     | T_SWITCH T_LBRACKET E1 T_RBRACKET T_OPEN SWITCH_BODY T_CLOSE
+   54     | T_INT T_TIMES T_VARIABLE T_EOL
+   55     | T_INT T_TIMES T_VARIABLE T_ASSIGN T_BAND T_VARIABLE T_EOL
+   56     | T_VARIABLE T_ASSIGN T_BAND T_VARIABLE T_EOL
+   57     | T_TIMES T_VARIABLE T_ASSIGN E1 T_EOL
+
+   58 AN_UNSIGNED: T_UNSIGNED
+   59            | T_UNSIGNED T_INT
+
+   60 SWITCH_BODY: T_CASE T_NUMBER T_COLON LINES SWITCH_BODY
+   61            | T_CASE T_NUMBER T_COLON LINES
+   62            | T_DEFAULT T_COLON LINES
+
+   63 LINE2: T_VARIABLE T_ASSIGN E1
+   64      | E1
+   65      | T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN E1
+   66      | %empty
+
+   67 FINALPARAMS: T_LBRACKET PARAMS T_RBRACKET
+
+   68 PARAMS: T_INT T_VARIABLE T_COMMA PARAMS
+   69       | T_INT T_VARIABLE
+
+   70 E1: E12
+   71   | E1 T_LOR E12
+
+   72 E12: E21
+   73    | E12 T_LAND E21
+
+   74 E21: E2
+   75    | E21 T_BOR E2
+
+   76 E2: E3
+   77   | E2 T_XOR E3
+
+   78 E3: E4
+   79   | E3 T_BAND E4
+
+   80 E4: C1
+   81   | E4 T_ALS C1
+   82   | E4 T_ARS C1
+
+   83 C1: C2
+   84   | C1 T_ASSIGN T_ASSIGN C2
+   85   | C1 T_NOT T_ASSIGN C2
+
+   86 C2: EXPR
+   87   | C2 T_LESS EXPR
+   88   | C2 T_LESSEQUAL EXPR
+   89   | C2 T_GREAT EXPR
+   90   | C2 T_GREATEQUAL EXPR
+
+   91 EXPR: TERM
+   92     | EXPR T_PLUS TERM
+   93     | EXPR T_MINUS TERM
+
+   94 TERM: UNARY
+   95     | TERM T_TIMES UNARY
+   96     | TERM T_DIVIDE UNARY
+   97     | TERM T_MOD UNARY
+
+   98 UNARY: FACTOR
+   99      | T_MINUS FACTOR
+
+  100 IDK: E1
+  101    | IDK T_COMMA E1
+
+  102 FACTOR: T_NUMBER
+  103       | T_VARIABLE
+  104       | T_VARIABLE T_LBRACKET T_RBRACKET
+  105       | T_VARIABLE T_LBRACKET E1 T_RBRACKET
+  106       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_RBRACKET
+  107       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+  110       | T_LBRACKET E1 T_RBRACKET
+  111       | T_VARIABLE T_LSQ E1 T_RSQ
+  112       | T_PP T_VARIABLE
+  113       | T_MM T_VARIABLE
+  114       | T_VARIABLE T_PP
+  115       | T_VARIABLE T_MM
+  116       | T_TIMES T_VARIABLE
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    T_INT (258) 4 5 7 8 10 12 14 21 25 36 54 55 59 68 69
+    T_PP (259) 112 114
+    T_PE (260) 43
+    T_MM (261) 113 115
+    T_ME (262) 44
+    T_DE (263) 46
+    T_TE (264) 45
+    T_MODE (265) 47
+    T_AE (266) 50
+    T_OE (267) 48
+    T_RSE (268) 52
+    T_LSE (269) 51
+    T_XE (270) 49
+    T_ASSIGN (271) 5 6 21 22 23 37 55 56 57 63 65 84 85
+    T_BAND (272) 55 56 79
+    T_BOR (273) 75
+    T_NOT (274) 85
+    T_XOR (275) 77
+    T_LESS (276) 87
+    T_GREAT (277) 89
+    T_LAND (278) 73
+    T_LOR (279) 71
+    T_ARS (280) 82
+    T_ALS (281) 81
+    T_TWOLESS (282)
+    T_TWOGREAT (283)
+    T_LESSEQUAL (284) 88
+    T_GREATEQUAL (285) 90
+    T_TIMES (286) 54 55 57 95 116
+    T_DIVIDE (287) 96
+    T_PLUS (288) 92
+    T_MINUS (289) 93 99
+    T_MOD (290) 97
+    T_LBRACKET (291) 10 11 14 15 17 27 28 29 30 31 32 33 34 35 39 40 53 67 104 105 106 107 108 109 110
+    T_RBRACKET (292) 10 11 14 15 17 27 28 29 30 31 32 33 34 35 39 40 53 67 104 105 106 107 108 109 110
+    T_OPEN (293) 8 9 10 11 16 17 28 29 32 33 34 35 40 53
+    T_CLOSE (294) 8 9 10 11 16 17 28 29 32 33 34 35 40 53
+    T_COMMA (295) 68 101 106 107 108 109
+    T_LSQ (296) 4 36 37 65 111
+    T_RSQ (297) 4 36 37 65 111
+    T_COLON (298) 60 61 62
+    T_DOT (299)
+    T_NUMBER <string> (300) 4 36 60 61 102
+    T_VARIABLE <string> (301) 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 25 36 37 43 44 45 46 47 48 49 50 51 52 54 55 56 57 63 65 68 69 103 104 105 106 107 108 109 111 112 113 114 115 116
+    T_IF (302) 30 31 32 33 34 35
+    T_ELSE (303) 31 32 34 35
+    T_EOL (304) 4 5 6 7 12 13 14 15 18 21 22 23 24 25 26 36 37 41 42 43 44 45 46 47 48 49 50 51 52 54 55 56 57
+    T_RETURN (305) 26
+    T_WHILE (306) 27 28 29
+    T_FOR (307) 39 40
+    T_BREAK (308) 42
+    T_CONT (309) 41
+    T_SWITCH (310) 53
+    T_CASE (311) 60 61
+    T_DEFAULT (312) 62
+    T_VOID (313) 9 11 13 15
+    T_UNSIGNED (314) 58 59
+
+
+Nonterminals, with rules where they appear
+
+    $accept (60)
+        on left: 0
+    ROOT (61)
+        on left: 1
+        on right: 0
+    FUNCTIONS <node> (62)
+        on left: 2 3 4 5 6 7
+        on right: 1 3 4 5 6 7
+    FUNCT <node> (63)
+        on left: 8 9 10 11 12 13 14 15 16 17 18
+        on right: 2 3
+    LINES <node> (64)
+        on left: 19 20
+        on right: 8 9 10 11 16 17 19 28 32 33 34 35 40 60 61 62
+    LINE <node> (65)
+        on left: 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57
+        on right: 19 20 27 30 31 32 34 39 40
+    AN_UNSIGNED <string> (66)
+        on left: 58 59
+        on right: 16 17 18 23
+    SWITCH_BODY <node> (67)
+        on left: 60 61 62
+        on right: 53 60
+    LINE2 <node> (68)
+        on left: 63 64 65 66
+        on right: 39 40
+    FINALPARAMS <node> (69)
+        on left: 67
+        on right: 8 9 12 13 16 18
+    PARAMS <node> (70)
+        on left: 68 69
+        on right: 67 68
+    E1 <node> (71)
+        on left: 70 71
+        on right: 5 6 21 22 23 24 26 27 28 29 30 31 32 33 34 35 37 43 44 45 46 47 48 49 50 51 52 53 57 63 64 65 71 100 101 105 106 107 108 109 110 111
+    E12 <node> (72)
+        on left: 72 73
+        on right: 70 71 73
+    E21 <node> (73)
+        on left: 74 75
+        on right: 72 73 75
+    E2 <node> (74)
+        on left: 76 77
+        on right: 74 75 77
+    E3 <node> (75)
+        on left: 78 79
+        on right: 76 77 79
+    E4 <node> (76)
+        on left: 80 81 82
+        on right: 78 79 81 82
+    C1 <node> (77)
+        on left: 83 84 85
+        on right: 80 81 82 84 85
+    C2 <node> (78)
+        on left: 86 87 88 89 90
+        on right: 83 84 85 87 88 89 90
+    EXPR <node> (79)
+        on left: 91 92 93
+        on right: 86 87 88 89 90 92 93
+    TERM <node> (80)
+        on left: 94 95 96 97
+        on right: 91 92 93 95 96 97
+    UNARY <node> (81)
+        on left: 98 99
+        on right: 94 95 96 97
+    IDK <node> (82)
+        on left: 100 101
+        on right: 101 109
+    FACTOR <node> (83)
+        on left: 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116
+        on right: 98 99
+
+
+State 0
+
+    0 $accept: . ROOT $end
+
+    T_INT       shift, and go to state 1
+    T_VARIABLE  shift, and go to state 2
+    T_VOID      shift, and go to state 3
+    T_UNSIGNED  shift, and go to state 4
+
+    ROOT         go to state 5
+    FUNCTIONS    go to state 6
+    FUNCT        go to state 7
+    AN_UNSIGNED  go to state 8
+
+
+State 1
+
+    4 FUNCTIONS: T_INT . T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL FUNCTIONS
+    5          | T_INT . T_VARIABLE T_ASSIGN E1 T_EOL FUNCTIONS
+    7          | T_INT . T_VARIABLE T_EOL FUNCTIONS
+    8 FUNCT: T_INT . T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE
+   10      | T_INT . T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   12      | T_INT . T_VARIABLE FINALPARAMS T_EOL
+   14      | T_INT . T_VARIABLE T_LBRACKET T_RBRACKET T_EOL
+
+    T_VARIABLE  shift, and go to state 9
+
+
+State 2
+
+    6 FUNCTIONS: T_VARIABLE . T_ASSIGN E1 T_EOL FUNCTIONS
+
+    T_ASSIGN  shift, and go to state 10
+
+
+State 3
+
+    9 FUNCT: T_VOID . T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE
+   11      | T_VOID . T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   13      | T_VOID . T_VARIABLE FINALPARAMS T_EOL
+   15      | T_VOID . T_VARIABLE T_LBRACKET T_RBRACKET T_EOL
+
+    T_VARIABLE  shift, and go to state 11
+
+
+State 4
+
+   58 AN_UNSIGNED: T_UNSIGNED .
+   59            | T_UNSIGNED . T_INT
+
+    T_INT  shift, and go to state 12
+
+    $default  reduce using rule 58 (AN_UNSIGNED)
+
+
+State 5
+
+    0 $accept: ROOT . $end
+
+    $end  shift, and go to state 13
+
+
+State 6
+
+    1 ROOT: FUNCTIONS .
+
+    $default  reduce using rule 1 (ROOT)
+
+
+State 7
+
+    2 FUNCTIONS: FUNCT .
+    3          | FUNCT . FUNCTIONS
+
+    T_INT       shift, and go to state 1
+    T_VARIABLE  shift, and go to state 2
+    T_VOID      shift, and go to state 3
+    T_UNSIGNED  shift, and go to state 4
+
+    $default  reduce using rule 2 (FUNCTIONS)
+
+    FUNCTIONS    go to state 14
+    FUNCT        go to state 7
+    AN_UNSIGNED  go to state 8
+
+
+State 8
+
+   16 FUNCT: AN_UNSIGNED . T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE
+   17      | AN_UNSIGNED . T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   18      | AN_UNSIGNED . T_VARIABLE FINALPARAMS T_EOL
+
+    T_VARIABLE  shift, and go to state 15
+
+
+State 9
+
+    4 FUNCTIONS: T_INT T_VARIABLE . T_LSQ T_NUMBER T_RSQ T_EOL FUNCTIONS
+    5          | T_INT T_VARIABLE . T_ASSIGN E1 T_EOL FUNCTIONS
+    7          | T_INT T_VARIABLE . T_EOL FUNCTIONS
+    8 FUNCT: T_INT T_VARIABLE . FINALPARAMS T_OPEN LINES T_CLOSE
+   10      | T_INT T_VARIABLE . T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   12      | T_INT T_VARIABLE . FINALPARAMS T_EOL
+   14      | T_INT T_VARIABLE . T_LBRACKET T_RBRACKET T_EOL
+
+    T_ASSIGN    shift, and go to state 16
+    T_LBRACKET  shift, and go to state 17
+    T_LSQ       shift, and go to state 18
+    T_EOL       shift, and go to state 19
+
+    FINALPARAMS  go to state 20
+
+
+State 10
+
+    6 FUNCTIONS: T_VARIABLE T_ASSIGN . E1 T_EOL FUNCTIONS
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 28
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 11
+
+    9 FUNCT: T_VOID T_VARIABLE . FINALPARAMS T_OPEN LINES T_CLOSE
+   11      | T_VOID T_VARIABLE . T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   13      | T_VOID T_VARIABLE . FINALPARAMS T_EOL
+   15      | T_VOID T_VARIABLE . T_LBRACKET T_RBRACKET T_EOL
+
+    T_LBRACKET  shift, and go to state 40
+
+    FINALPARAMS  go to state 41
+
+
+State 12
+
+   59 AN_UNSIGNED: T_UNSIGNED T_INT .
+
+    $default  reduce using rule 59 (AN_UNSIGNED)
+
+
+State 13
+
+    0 $accept: ROOT $end .
+
+    $default  accept
+
+
+State 14
+
+    3 FUNCTIONS: FUNCT FUNCTIONS .
+
+    $default  reduce using rule 3 (FUNCTIONS)
+
+
+State 15
+
+   16 FUNCT: AN_UNSIGNED T_VARIABLE . FINALPARAMS T_OPEN LINES T_CLOSE
+   17      | AN_UNSIGNED T_VARIABLE . T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE
+   18      | AN_UNSIGNED T_VARIABLE . FINALPARAMS T_EOL
+
+    T_LBRACKET  shift, and go to state 42
+
+    FINALPARAMS  go to state 43
+
+
+State 16
+
+    5 FUNCTIONS: T_INT T_VARIABLE T_ASSIGN . E1 T_EOL FUNCTIONS
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 44
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 17
+
+   10 FUNCT: T_INT T_VARIABLE T_LBRACKET . T_RBRACKET T_OPEN LINES T_CLOSE
+   14      | T_INT T_VARIABLE T_LBRACKET . T_RBRACKET T_EOL
+   67 FINALPARAMS: T_LBRACKET . PARAMS T_RBRACKET
+
+    T_INT       shift, and go to state 45
+    T_RBRACKET  shift, and go to state 46
+
+    PARAMS  go to state 47
+
+
+State 18
+
+    4 FUNCTIONS: T_INT T_VARIABLE T_LSQ . T_NUMBER T_RSQ T_EOL FUNCTIONS
+
+    T_NUMBER  shift, and go to state 48
+
+
+State 19
+
+    7 FUNCTIONS: T_INT T_VARIABLE T_EOL . FUNCTIONS
+
+    T_INT       shift, and go to state 1
+    T_VARIABLE  shift, and go to state 2
+    T_VOID      shift, and go to state 3
+    T_UNSIGNED  shift, and go to state 4
+
+    FUNCTIONS    go to state 49
+    FUNCT        go to state 7
+    AN_UNSIGNED  go to state 8
+
+
+State 20
+
+    8 FUNCT: T_INT T_VARIABLE FINALPARAMS . T_OPEN LINES T_CLOSE
+   12      | T_INT T_VARIABLE FINALPARAMS . T_EOL
+
+    T_OPEN  shift, and go to state 50
+    T_EOL   shift, and go to state 51
+
+
+State 21
+
+  112 FACTOR: T_PP . T_VARIABLE
+
+    T_VARIABLE  shift, and go to state 52
+
+
+State 22
+
+  113 FACTOR: T_MM . T_VARIABLE
+
+    T_VARIABLE  shift, and go to state 53
+
+
+State 23
+
+  116 FACTOR: T_TIMES . T_VARIABLE
+
+    T_VARIABLE  shift, and go to state 54
+
+
+State 24
+
+   99 UNARY: T_MINUS . FACTOR
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    FACTOR  go to state 55
+
+
+State 25
+
+  110 FACTOR: T_LBRACKET . E1 T_RBRACKET
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 56
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 26
+
+  102 FACTOR: T_NUMBER .
+
+    $default  reduce using rule 102 (FACTOR)
+
+
+State 27
+
+  103 FACTOR: T_VARIABLE .
+  104       | T_VARIABLE . T_LBRACKET T_RBRACKET
+  105       | T_VARIABLE . T_LBRACKET E1 T_RBRACKET
+  106       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_RBRACKET
+  107       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+  111       | T_VARIABLE . T_LSQ E1 T_RSQ
+  114       | T_VARIABLE . T_PP
+  115       | T_VARIABLE . T_MM
+
+    T_PP        shift, and go to state 57
+    T_MM        shift, and go to state 58
+    T_LBRACKET  shift, and go to state 59
+    T_LSQ       shift, and go to state 60
+
+    $default  reduce using rule 103 (FACTOR)
+
+
+State 28
+
+    6 FUNCTIONS: T_VARIABLE T_ASSIGN E1 . T_EOL FUNCTIONS
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 62
+
+
+State 29
+
+   70 E1: E12 .
+   73 E12: E12 . T_LAND E21
+
+    T_LAND  shift, and go to state 63
+
+    $default  reduce using rule 70 (E1)
+
+
+State 30
+
+   72 E12: E21 .
+   75 E21: E21 . T_BOR E2
+
+    T_BOR  shift, and go to state 64
+
+    $default  reduce using rule 72 (E12)
+
+
+State 31
+
+   74 E21: E2 .
+   77 E2: E2 . T_XOR E3
+
+    T_XOR  shift, and go to state 65
+
+    $default  reduce using rule 74 (E21)
+
+
+State 32
+
+   76 E2: E3 .
+   79 E3: E3 . T_BAND E4
+
+    T_BAND  shift, and go to state 66
+
+    $default  reduce using rule 76 (E2)
+
+
+State 33
+
+   78 E3: E4 .
+   81 E4: E4 . T_ALS C1
+   82   | E4 . T_ARS C1
+
+    T_ARS  shift, and go to state 67
+    T_ALS  shift, and go to state 68
+
+    $default  reduce using rule 78 (E3)
+
+
+State 34
+
+   80 E4: C1 .
+   84 C1: C1 . T_ASSIGN T_ASSIGN C2
+   85   | C1 . T_NOT T_ASSIGN C2
+
+    T_ASSIGN  shift, and go to state 69
+    T_NOT     shift, and go to state 70
+
+    $default  reduce using rule 80 (E4)
+
+
+State 35
+
+   83 C1: C2 .
+   87 C2: C2 . T_LESS EXPR
+   88   | C2 . T_LESSEQUAL EXPR
+   89   | C2 . T_GREAT EXPR
+   90   | C2 . T_GREATEQUAL EXPR
+
+    T_LESS        shift, and go to state 71
+    T_GREAT       shift, and go to state 72
+    T_LESSEQUAL   shift, and go to state 73
+    T_GREATEQUAL  shift, and go to state 74
+
+    $default  reduce using rule 83 (C1)
+
+
+State 36
+
+   86 C2: EXPR .
+   92 EXPR: EXPR . T_PLUS TERM
+   93     | EXPR . T_MINUS TERM
+
+    T_PLUS   shift, and go to state 75
+    T_MINUS  shift, and go to state 76
+
+    $default  reduce using rule 86 (C2)
+
+
+State 37
+
+   91 EXPR: TERM .
+   95 TERM: TERM . T_TIMES UNARY
+   96     | TERM . T_DIVIDE UNARY
+   97     | TERM . T_MOD UNARY
+
+    T_TIMES   shift, and go to state 77
+    T_DIVIDE  shift, and go to state 78
+    T_MOD     shift, and go to state 79
+
+    $default  reduce using rule 91 (EXPR)
+
+
+State 38
+
+   94 TERM: UNARY .
+
+    $default  reduce using rule 94 (TERM)
+
+
+State 39
+
+   98 UNARY: FACTOR .
+
+    $default  reduce using rule 98 (UNARY)
+
+
+State 40
+
+   11 FUNCT: T_VOID T_VARIABLE T_LBRACKET . T_RBRACKET T_OPEN LINES T_CLOSE
+   15      | T_VOID T_VARIABLE T_LBRACKET . T_RBRACKET T_EOL
+   67 FINALPARAMS: T_LBRACKET . PARAMS T_RBRACKET
+
+    T_INT       shift, and go to state 45
+    T_RBRACKET  shift, and go to state 80
+
+    PARAMS  go to state 47
+
+
+State 41
+
+    9 FUNCT: T_VOID T_VARIABLE FINALPARAMS . T_OPEN LINES T_CLOSE
+   13      | T_VOID T_VARIABLE FINALPARAMS . T_EOL
+
+    T_OPEN  shift, and go to state 81
+    T_EOL   shift, and go to state 82
+
+
+State 42
+
+   17 FUNCT: AN_UNSIGNED T_VARIABLE T_LBRACKET . T_RBRACKET T_OPEN LINES T_CLOSE
+   67 FINALPARAMS: T_LBRACKET . PARAMS T_RBRACKET
+
+    T_INT       shift, and go to state 45
+    T_RBRACKET  shift, and go to state 83
+
+    PARAMS  go to state 47
+
+
+State 43
+
+   16 FUNCT: AN_UNSIGNED T_VARIABLE FINALPARAMS . T_OPEN LINES T_CLOSE
+   18      | AN_UNSIGNED T_VARIABLE FINALPARAMS . T_EOL
+
+    T_OPEN  shift, and go to state 84
+    T_EOL   shift, and go to state 85
+
+
+State 44
+
+    5 FUNCTIONS: T_INT T_VARIABLE T_ASSIGN E1 . T_EOL FUNCTIONS
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 86
+
+
+State 45
+
+   68 PARAMS: T_INT . T_VARIABLE T_COMMA PARAMS
+   69       | T_INT . T_VARIABLE
+
+    T_VARIABLE  shift, and go to state 87
+
+
+State 46
+
+   10 FUNCT: T_INT T_VARIABLE T_LBRACKET T_RBRACKET . T_OPEN LINES T_CLOSE
+   14      | T_INT T_VARIABLE T_LBRACKET T_RBRACKET . T_EOL
+
+    T_OPEN  shift, and go to state 88
+    T_EOL   shift, and go to state 89
+
+
+State 47
+
+   67 FINALPARAMS: T_LBRACKET PARAMS . T_RBRACKET
+
+    T_RBRACKET  shift, and go to state 90
+
+
+State 48
+
+    4 FUNCTIONS: T_INT T_VARIABLE T_LSQ T_NUMBER . T_RSQ T_EOL FUNCTIONS
+
+    T_RSQ  shift, and go to state 91
+
+
+State 49
+
+    7 FUNCTIONS: T_INT T_VARIABLE T_EOL FUNCTIONS .
+
+    $default  reduce using rule 7 (FUNCTIONS)
+
+
+State 50
+
+    8 FUNCT: T_INT T_VARIABLE FINALPARAMS T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 102
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 51
+
+   12 FUNCT: T_INT T_VARIABLE FINALPARAMS T_EOL .
+
+    $default  reduce using rule 12 (FUNCT)
+
+
+State 52
+
+  112 FACTOR: T_PP T_VARIABLE .
+
+    $default  reduce using rule 112 (FACTOR)
+
+
+State 53
+
+  113 FACTOR: T_MM T_VARIABLE .
+
+    $default  reduce using rule 113 (FACTOR)
+
+
+State 54
+
+  116 FACTOR: T_TIMES T_VARIABLE .
+
+    $default  reduce using rule 116 (FACTOR)
+
+
+State 55
+
+   99 UNARY: T_MINUS FACTOR .
+
+    $default  reduce using rule 99 (UNARY)
+
+
+State 56
+
+   71 E1: E1 . T_LOR E12
+  110 FACTOR: T_LBRACKET E1 . T_RBRACKET
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 106
+
+
+State 57
+
+  114 FACTOR: T_VARIABLE T_PP .
+
+    $default  reduce using rule 114 (FACTOR)
+
+
+State 58
+
+  115 FACTOR: T_VARIABLE T_MM .
+
+    $default  reduce using rule 115 (FACTOR)
+
+
+State 59
+
+  104 FACTOR: T_VARIABLE T_LBRACKET . T_RBRACKET
+  105       | T_VARIABLE T_LBRACKET . E1 T_RBRACKET
+  106       | T_VARIABLE T_LBRACKET . E1 T_COMMA E1 T_RBRACKET
+  107       | T_VARIABLE T_LBRACKET . E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET . E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET . E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_RBRACKET  shift, and go to state 107
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 108
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 60
+
+  111 FACTOR: T_VARIABLE T_LSQ . E1 T_RSQ
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 109
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 61
+
+   71 E1: E1 T_LOR . E12
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E12     go to state 110
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 62
+
+    6 FUNCTIONS: T_VARIABLE T_ASSIGN E1 T_EOL . FUNCTIONS
+
+    T_INT       shift, and go to state 1
+    T_VARIABLE  shift, and go to state 2
+    T_VOID      shift, and go to state 3
+    T_UNSIGNED  shift, and go to state 4
+
+    FUNCTIONS    go to state 111
+    FUNCT        go to state 7
+    AN_UNSIGNED  go to state 8
+
+
+State 63
+
+   73 E12: E12 T_LAND . E21
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E21     go to state 112
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 64
+
+   75 E21: E21 T_BOR . E2
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E2      go to state 113
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 65
+
+   77 E2: E2 T_XOR . E3
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E3      go to state 114
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 66
+
+   79 E3: E3 T_BAND . E4
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E4      go to state 115
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 67
+
+   82 E4: E4 T_ARS . C1
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    C1      go to state 116
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 68
+
+   81 E4: E4 T_ALS . C1
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    C1      go to state 117
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 69
+
+   84 C1: C1 T_ASSIGN . T_ASSIGN C2
+
+    T_ASSIGN  shift, and go to state 118
+
+
+State 70
+
+   85 C1: C1 T_NOT . T_ASSIGN C2
+
+    T_ASSIGN  shift, and go to state 119
+
+
+State 71
+
+   87 C2: C2 T_LESS . EXPR
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    EXPR    go to state 120
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 72
+
+   89 C2: C2 T_GREAT . EXPR
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    EXPR    go to state 121
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 73
+
+   88 C2: C2 T_LESSEQUAL . EXPR
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    EXPR    go to state 122
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 74
+
+   90 C2: C2 T_GREATEQUAL . EXPR
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    EXPR    go to state 123
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 75
+
+   92 EXPR: EXPR T_PLUS . TERM
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    TERM    go to state 124
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 76
+
+   93 EXPR: EXPR T_MINUS . TERM
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    TERM    go to state 125
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 77
+
+   95 TERM: TERM T_TIMES . UNARY
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    UNARY   go to state 126
+    FACTOR  go to state 39
+
+
+State 78
+
+   96 TERM: TERM T_DIVIDE . UNARY
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    UNARY   go to state 127
+    FACTOR  go to state 39
+
+
+State 79
+
+   97 TERM: TERM T_MOD . UNARY
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    UNARY   go to state 128
+    FACTOR  go to state 39
+
+
+State 80
+
+   11 FUNCT: T_VOID T_VARIABLE T_LBRACKET T_RBRACKET . T_OPEN LINES T_CLOSE
+   15      | T_VOID T_VARIABLE T_LBRACKET T_RBRACKET . T_EOL
+
+    T_OPEN  shift, and go to state 129
+    T_EOL   shift, and go to state 130
+
+
+State 81
+
+    9 FUNCT: T_VOID T_VARIABLE FINALPARAMS T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 131
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 82
+
+   13 FUNCT: T_VOID T_VARIABLE FINALPARAMS T_EOL .
+
+    $default  reduce using rule 13 (FUNCT)
+
+
+State 83
+
+   17 FUNCT: AN_UNSIGNED T_VARIABLE T_LBRACKET T_RBRACKET . T_OPEN LINES T_CLOSE
+
+    T_OPEN  shift, and go to state 132
+
+
+State 84
+
+   16 FUNCT: AN_UNSIGNED T_VARIABLE FINALPARAMS T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 133
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 85
+
+   18 FUNCT: AN_UNSIGNED T_VARIABLE FINALPARAMS T_EOL .
+
+    $default  reduce using rule 18 (FUNCT)
+
+
+State 86
+
+    5 FUNCTIONS: T_INT T_VARIABLE T_ASSIGN E1 T_EOL . FUNCTIONS
+
+    T_INT       shift, and go to state 1
+    T_VARIABLE  shift, and go to state 2
+    T_VOID      shift, and go to state 3
+    T_UNSIGNED  shift, and go to state 4
+
+    FUNCTIONS    go to state 134
+    FUNCT        go to state 7
+    AN_UNSIGNED  go to state 8
+
+
+State 87
+
+   68 PARAMS: T_INT T_VARIABLE . T_COMMA PARAMS
+   69       | T_INT T_VARIABLE .
+
+    T_COMMA  shift, and go to state 135
+
+    $default  reduce using rule 69 (PARAMS)
+
+
+State 88
+
+   10 FUNCT: T_INT T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 136
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 89
+
+   14 FUNCT: T_INT T_VARIABLE T_LBRACKET T_RBRACKET T_EOL .
+
+    $default  reduce using rule 14 (FUNCT)
+
+
+State 90
+
+   67 FINALPARAMS: T_LBRACKET PARAMS T_RBRACKET .
+
+    $default  reduce using rule 67 (FINALPARAMS)
+
+
+State 91
+
+    4 FUNCTIONS: T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ . T_EOL FUNCTIONS
+
+    T_EOL  shift, and go to state 137
+
+
+State 92
+
+   21 LINE: T_INT . T_VARIABLE T_ASSIGN E1 T_EOL
+   25     | T_INT . T_VARIABLE T_EOL
+   36     | T_INT . T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL
+   54     | T_INT . T_TIMES T_VARIABLE T_EOL
+   55     | T_INT . T_TIMES T_VARIABLE T_ASSIGN T_BAND T_VARIABLE T_EOL
+
+    T_TIMES     shift, and go to state 138
+    T_VARIABLE  shift, and go to state 139
+
+
+State 93
+
+   57 LINE: T_TIMES . T_VARIABLE T_ASSIGN E1 T_EOL
+  116 FACTOR: T_TIMES . T_VARIABLE
+
+    T_VARIABLE  shift, and go to state 140
+
+
+State 94
+
+   22 LINE: T_VARIABLE . T_ASSIGN E1 T_EOL
+   37     | T_VARIABLE . T_LSQ E1 T_RSQ T_ASSIGN E1 T_EOL
+   43     | T_VARIABLE . T_PE E1 T_EOL
+   44     | T_VARIABLE . T_ME E1 T_EOL
+   45     | T_VARIABLE . T_TE E1 T_EOL
+   46     | T_VARIABLE . T_DE E1 T_EOL
+   47     | T_VARIABLE . T_MODE E1 T_EOL
+   48     | T_VARIABLE . T_OE E1 T_EOL
+   49     | T_VARIABLE . T_XE E1 T_EOL
+   50     | T_VARIABLE . T_AE E1 T_EOL
+   51     | T_VARIABLE . T_LSE E1 T_EOL
+   52     | T_VARIABLE . T_RSE E1 T_EOL
+   56     | T_VARIABLE . T_ASSIGN T_BAND T_VARIABLE T_EOL
+  103 FACTOR: T_VARIABLE .
+  104       | T_VARIABLE . T_LBRACKET T_RBRACKET
+  105       | T_VARIABLE . T_LBRACKET E1 T_RBRACKET
+  106       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_RBRACKET
+  107       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+  111       | T_VARIABLE . T_LSQ E1 T_RSQ
+  114       | T_VARIABLE . T_PP
+  115       | T_VARIABLE . T_MM
+
+    T_PP        shift, and go to state 57
+    T_PE        shift, and go to state 141
+    T_MM        shift, and go to state 58
+    T_ME        shift, and go to state 142
+    T_DE        shift, and go to state 143
+    T_TE        shift, and go to state 144
+    T_MODE      shift, and go to state 145
+    T_AE        shift, and go to state 146
+    T_OE        shift, and go to state 147
+    T_RSE       shift, and go to state 148
+    T_LSE       shift, and go to state 149
+    T_XE        shift, and go to state 150
+    T_ASSIGN    shift, and go to state 151
+    T_LBRACKET  shift, and go to state 59
+    T_LSQ       shift, and go to state 152
+
+    T_ASSIGN  [reduce using rule 103 (FACTOR)]
+    $default  reduce using rule 103 (FACTOR)
+
+
+State 95
+
+   30 LINE: T_IF . T_LBRACKET E1 T_RBRACKET LINE
+   31     | T_IF . T_LBRACKET E1 T_RBRACKET LINE T_ELSE LINE
+   32     | T_IF . T_LBRACKET E1 T_RBRACKET LINE T_ELSE T_OPEN LINES T_CLOSE
+   33     | T_IF . T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE
+   34     | T_IF . T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE LINE
+   35     | T_IF . T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+
+    T_LBRACKET  shift, and go to state 153
+
+
+State 96
+
+   26 LINE: T_RETURN . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 154
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 97
+
+   27 LINE: T_WHILE . T_LBRACKET E1 T_RBRACKET LINE
+   28     | T_WHILE . T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE
+   29     | T_WHILE . T_LBRACKET E1 T_RBRACKET T_OPEN T_CLOSE
+
+    T_LBRACKET  shift, and go to state 155
+
+
+State 98
+
+   39 LINE: T_FOR . T_LBRACKET LINE LINE LINE2 T_RBRACKET LINE
+   40     | T_FOR . T_LBRACKET LINE LINE LINE2 T_RBRACKET T_OPEN LINES T_CLOSE
+
+    T_LBRACKET  shift, and go to state 156
+
+
+State 99
+
+   42 LINE: T_BREAK . T_EOL
+
+    T_EOL  shift, and go to state 157
+
+
+State 100
+
+   41 LINE: T_CONT . T_EOL
+
+    T_EOL  shift, and go to state 158
+
+
+State 101
+
+   53 LINE: T_SWITCH . T_LBRACKET E1 T_RBRACKET T_OPEN SWITCH_BODY T_CLOSE
+
+    T_LBRACKET  shift, and go to state 159
+
+
+State 102
+
+    8 FUNCT: T_INT T_VARIABLE FINALPARAMS T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 160
+
+
+State 103
+
+   19 LINES: LINE . LINES
+   20      | LINE .
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_CLOSE     reduce using rule 20 (LINES)
+    T_CLOSE     [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_CASE      reduce using rule 20 (LINES)
+    T_CASE      [reduce using rule 38 (LINE)]
+    T_DEFAULT   reduce using rule 20 (LINES)
+    T_DEFAULT   [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 20 (LINES)
+
+    LINES        go to state 161
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 104
+
+   23 LINE: AN_UNSIGNED . T_VARIABLE T_ASSIGN E1 T_EOL
+
+    T_VARIABLE  shift, and go to state 162
+
+
+State 105
+
+   24 LINE: E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 163
+
+
+State 106
+
+  110 FACTOR: T_LBRACKET E1 T_RBRACKET .
+
+    $default  reduce using rule 110 (FACTOR)
+
+
+State 107
+
+  104 FACTOR: T_VARIABLE T_LBRACKET T_RBRACKET .
+
+    $default  reduce using rule 104 (FACTOR)
+
+
+State 108
+
+   71 E1: E1 . T_LOR E12
+  105 FACTOR: T_VARIABLE T_LBRACKET E1 . T_RBRACKET
+  106       | T_VARIABLE T_LBRACKET E1 . T_COMMA E1 T_RBRACKET
+  107       | T_VARIABLE T_LBRACKET E1 . T_COMMA E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET E1 . T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 . T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 164
+    T_COMMA     shift, and go to state 165
+
+
+State 109
+
+   71 E1: E1 . T_LOR E12
+  111 FACTOR: T_VARIABLE T_LSQ E1 . T_RSQ
+
+    T_LOR  shift, and go to state 61
+    T_RSQ  shift, and go to state 166
+
+
+State 110
+
+   71 E1: E1 T_LOR E12 .
+   73 E12: E12 . T_LAND E21
+
+    T_LAND  shift, and go to state 63
+
+    $default  reduce using rule 71 (E1)
+
+
+State 111
+
+    6 FUNCTIONS: T_VARIABLE T_ASSIGN E1 T_EOL FUNCTIONS .
+
+    $default  reduce using rule 6 (FUNCTIONS)
+
+
+State 112
+
+   73 E12: E12 T_LAND E21 .
+   75 E21: E21 . T_BOR E2
+
+    T_BOR  shift, and go to state 64
+
+    $default  reduce using rule 73 (E12)
+
+
+State 113
+
+   75 E21: E21 T_BOR E2 .
+   77 E2: E2 . T_XOR E3
+
+    T_XOR  shift, and go to state 65
+
+    $default  reduce using rule 75 (E21)
+
+
+State 114
+
+   77 E2: E2 T_XOR E3 .
+   79 E3: E3 . T_BAND E4
+
+    T_BAND  shift, and go to state 66
+
+    $default  reduce using rule 77 (E2)
+
+
+State 115
+
+   79 E3: E3 T_BAND E4 .
+   81 E4: E4 . T_ALS C1
+   82   | E4 . T_ARS C1
+
+    T_ARS  shift, and go to state 67
+    T_ALS  shift, and go to state 68
+
+    $default  reduce using rule 79 (E3)
+
+
+State 116
+
+   82 E4: E4 T_ARS C1 .
+   84 C1: C1 . T_ASSIGN T_ASSIGN C2
+   85   | C1 . T_NOT T_ASSIGN C2
+
+    T_ASSIGN  shift, and go to state 69
+    T_NOT     shift, and go to state 70
+
+    $default  reduce using rule 82 (E4)
+
+
+State 117
+
+   81 E4: E4 T_ALS C1 .
+   84 C1: C1 . T_ASSIGN T_ASSIGN C2
+   85   | C1 . T_NOT T_ASSIGN C2
+
+    T_ASSIGN  shift, and go to state 69
+    T_NOT     shift, and go to state 70
+
+    $default  reduce using rule 81 (E4)
+
+
+State 118
+
+   84 C1: C1 T_ASSIGN T_ASSIGN . C2
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    C2      go to state 167
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 119
+
+   85 C1: C1 T_NOT T_ASSIGN . C2
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    C2      go to state 168
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 120
+
+   87 C2: C2 T_LESS EXPR .
+   92 EXPR: EXPR . T_PLUS TERM
+   93     | EXPR . T_MINUS TERM
+
+    T_PLUS   shift, and go to state 75
+    T_MINUS  shift, and go to state 76
+
+    $default  reduce using rule 87 (C2)
+
+
+State 121
+
+   89 C2: C2 T_GREAT EXPR .
+   92 EXPR: EXPR . T_PLUS TERM
+   93     | EXPR . T_MINUS TERM
+
+    T_PLUS   shift, and go to state 75
+    T_MINUS  shift, and go to state 76
+
+    $default  reduce using rule 89 (C2)
+
+
+State 122
+
+   88 C2: C2 T_LESSEQUAL EXPR .
+   92 EXPR: EXPR . T_PLUS TERM
+   93     | EXPR . T_MINUS TERM
+
+    T_PLUS   shift, and go to state 75
+    T_MINUS  shift, and go to state 76
+
+    $default  reduce using rule 88 (C2)
+
+
+State 123
+
+   90 C2: C2 T_GREATEQUAL EXPR .
+   92 EXPR: EXPR . T_PLUS TERM
+   93     | EXPR . T_MINUS TERM
+
+    T_PLUS   shift, and go to state 75
+    T_MINUS  shift, and go to state 76
+
+    $default  reduce using rule 90 (C2)
+
+
+State 124
+
+   92 EXPR: EXPR T_PLUS TERM .
+   95 TERM: TERM . T_TIMES UNARY
+   96     | TERM . T_DIVIDE UNARY
+   97     | TERM . T_MOD UNARY
+
+    T_TIMES   shift, and go to state 77
+    T_DIVIDE  shift, and go to state 78
+    T_MOD     shift, and go to state 79
+
+    $default  reduce using rule 92 (EXPR)
+
+
+State 125
+
+   93 EXPR: EXPR T_MINUS TERM .
+   95 TERM: TERM . T_TIMES UNARY
+   96     | TERM . T_DIVIDE UNARY
+   97     | TERM . T_MOD UNARY
+
+    T_TIMES   shift, and go to state 77
+    T_DIVIDE  shift, and go to state 78
+    T_MOD     shift, and go to state 79
+
+    $default  reduce using rule 93 (EXPR)
+
+
+State 126
+
+   95 TERM: TERM T_TIMES UNARY .
+
+    $default  reduce using rule 95 (TERM)
+
+
+State 127
+
+   96 TERM: TERM T_DIVIDE UNARY .
+
+    $default  reduce using rule 96 (TERM)
+
+
+State 128
+
+   97 TERM: TERM T_MOD UNARY .
+
+    $default  reduce using rule 97 (TERM)
+
+
+State 129
+
+   11 FUNCT: T_VOID T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 169
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 130
+
+   15 FUNCT: T_VOID T_VARIABLE T_LBRACKET T_RBRACKET T_EOL .
+
+    $default  reduce using rule 15 (FUNCT)
+
+
+State 131
+
+    9 FUNCT: T_VOID T_VARIABLE FINALPARAMS T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 170
+
+
+State 132
+
+   17 FUNCT: AN_UNSIGNED T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 171
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 133
+
+   16 FUNCT: AN_UNSIGNED T_VARIABLE FINALPARAMS T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 172
+
+
+State 134
+
+    5 FUNCTIONS: T_INT T_VARIABLE T_ASSIGN E1 T_EOL FUNCTIONS .
+
+    $default  reduce using rule 5 (FUNCTIONS)
+
+
+State 135
+
+   68 PARAMS: T_INT T_VARIABLE T_COMMA . PARAMS
+
+    T_INT  shift, and go to state 45
+
+    PARAMS  go to state 173
+
+
+State 136
+
+   10 FUNCT: T_INT T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 174
+
+
+State 137
+
+    4 FUNCTIONS: T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL . FUNCTIONS
+
+    T_INT       shift, and go to state 1
+    T_VARIABLE  shift, and go to state 2
+    T_VOID      shift, and go to state 3
+    T_UNSIGNED  shift, and go to state 4
+
+    FUNCTIONS    go to state 175
+    FUNCT        go to state 7
+    AN_UNSIGNED  go to state 8
+
+
+State 138
+
+   54 LINE: T_INT T_TIMES . T_VARIABLE T_EOL
+   55     | T_INT T_TIMES . T_VARIABLE T_ASSIGN T_BAND T_VARIABLE T_EOL
+
+    T_VARIABLE  shift, and go to state 176
+
+
+State 139
+
+   21 LINE: T_INT T_VARIABLE . T_ASSIGN E1 T_EOL
+   25     | T_INT T_VARIABLE . T_EOL
+   36     | T_INT T_VARIABLE . T_LSQ T_NUMBER T_RSQ T_EOL
+
+    T_ASSIGN  shift, and go to state 177
+    T_LSQ     shift, and go to state 178
+    T_EOL     shift, and go to state 179
+
+
+State 140
+
+   57 LINE: T_TIMES T_VARIABLE . T_ASSIGN E1 T_EOL
+  116 FACTOR: T_TIMES T_VARIABLE .
+
+    T_ASSIGN  shift, and go to state 180
+
+    T_ASSIGN  [reduce using rule 116 (FACTOR)]
+    $default  reduce using rule 116 (FACTOR)
+
+
+State 141
+
+   43 LINE: T_VARIABLE T_PE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 181
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 142
+
+   44 LINE: T_VARIABLE T_ME . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 182
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 143
+
+   46 LINE: T_VARIABLE T_DE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 183
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 144
+
+   45 LINE: T_VARIABLE T_TE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 184
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 145
+
+   47 LINE: T_VARIABLE T_MODE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 185
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 146
+
+   50 LINE: T_VARIABLE T_AE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 186
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 147
+
+   48 LINE: T_VARIABLE T_OE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 187
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 148
+
+   52 LINE: T_VARIABLE T_RSE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 188
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 149
+
+   51 LINE: T_VARIABLE T_LSE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 189
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 150
+
+   49 LINE: T_VARIABLE T_XE . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 190
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 151
+
+   22 LINE: T_VARIABLE T_ASSIGN . E1 T_EOL
+   56     | T_VARIABLE T_ASSIGN . T_BAND T_VARIABLE T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_BAND      shift, and go to state 191
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 192
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 152
+
+   37 LINE: T_VARIABLE T_LSQ . E1 T_RSQ T_ASSIGN E1 T_EOL
+  111 FACTOR: T_VARIABLE T_LSQ . E1 T_RSQ
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 193
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 153
+
+   30 LINE: T_IF T_LBRACKET . E1 T_RBRACKET LINE
+   31     | T_IF T_LBRACKET . E1 T_RBRACKET LINE T_ELSE LINE
+   32     | T_IF T_LBRACKET . E1 T_RBRACKET LINE T_ELSE T_OPEN LINES T_CLOSE
+   33     | T_IF T_LBRACKET . E1 T_RBRACKET T_OPEN LINES T_CLOSE
+   34     | T_IF T_LBRACKET . E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE LINE
+   35     | T_IF T_LBRACKET . E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 194
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 154
+
+   26 LINE: T_RETURN E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 195
+
+
+State 155
+
+   27 LINE: T_WHILE T_LBRACKET . E1 T_RBRACKET LINE
+   28     | T_WHILE T_LBRACKET . E1 T_RBRACKET T_OPEN LINES T_CLOSE
+   29     | T_WHILE T_LBRACKET . E1 T_RBRACKET T_OPEN T_CLOSE
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 196
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 156
+
+   39 LINE: T_FOR T_LBRACKET . LINE LINE LINE2 T_RBRACKET LINE
+   40     | T_FOR T_LBRACKET . LINE LINE LINE2 T_RBRACKET T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 197
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 157
+
+   42 LINE: T_BREAK T_EOL .
+
+    $default  reduce using rule 42 (LINE)
+
+
+State 158
+
+   41 LINE: T_CONT T_EOL .
+
+    $default  reduce using rule 41 (LINE)
+
+
+State 159
+
+   53 LINE: T_SWITCH T_LBRACKET . E1 T_RBRACKET T_OPEN SWITCH_BODY T_CLOSE
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 198
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 160
+
+    8 FUNCT: T_INT T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 8 (FUNCT)
+
+
+State 161
+
+   19 LINES: LINE LINES .
+
+    $default  reduce using rule 19 (LINES)
+
+
+State 162
+
+   23 LINE: AN_UNSIGNED T_VARIABLE . T_ASSIGN E1 T_EOL
+
+    T_ASSIGN  shift, and go to state 199
+
+
+State 163
+
+   24 LINE: E1 T_EOL .
+
+    $default  reduce using rule 24 (LINE)
+
+
+State 164
+
+  105 FACTOR: T_VARIABLE T_LBRACKET E1 T_RBRACKET .
+
+    $default  reduce using rule 105 (FACTOR)
+
+
+State 165
+
+  106 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA . E1 T_RBRACKET
+  107       | T_VARIABLE T_LBRACKET E1 T_COMMA . E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET E1 T_COMMA . E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA . E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 200
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 166
+
+  111 FACTOR: T_VARIABLE T_LSQ E1 T_RSQ .
+
+    $default  reduce using rule 111 (FACTOR)
+
+
+State 167
+
+   84 C1: C1 T_ASSIGN T_ASSIGN C2 .
+   87 C2: C2 . T_LESS EXPR
+   88   | C2 . T_LESSEQUAL EXPR
+   89   | C2 . T_GREAT EXPR
+   90   | C2 . T_GREATEQUAL EXPR
+
+    T_LESS        shift, and go to state 71
+    T_GREAT       shift, and go to state 72
+    T_LESSEQUAL   shift, and go to state 73
+    T_GREATEQUAL  shift, and go to state 74
+
+    $default  reduce using rule 84 (C1)
+
+
+State 168
+
+   85 C1: C1 T_NOT T_ASSIGN C2 .
+   87 C2: C2 . T_LESS EXPR
+   88   | C2 . T_LESSEQUAL EXPR
+   89   | C2 . T_GREAT EXPR
+   90   | C2 . T_GREATEQUAL EXPR
+
+    T_LESS        shift, and go to state 71
+    T_GREAT       shift, and go to state 72
+    T_LESSEQUAL   shift, and go to state 73
+    T_GREATEQUAL  shift, and go to state 74
+
+    $default  reduce using rule 85 (C1)
+
+
+State 169
+
+   11 FUNCT: T_VOID T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 201
+
+
+State 170
+
+    9 FUNCT: T_VOID T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 9 (FUNCT)
+
+
+State 171
+
+   17 FUNCT: AN_UNSIGNED T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 202
+
+
+State 172
+
+   16 FUNCT: AN_UNSIGNED T_VARIABLE FINALPARAMS T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 16 (FUNCT)
+
+
+State 173
+
+   68 PARAMS: T_INT T_VARIABLE T_COMMA PARAMS .
+
+    $default  reduce using rule 68 (PARAMS)
+
+
+State 174
+
+   10 FUNCT: T_INT T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 10 (FUNCT)
+
+
+State 175
+
+    4 FUNCTIONS: T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL FUNCTIONS .
+
+    $default  reduce using rule 4 (FUNCTIONS)
+
+
+State 176
+
+   54 LINE: T_INT T_TIMES T_VARIABLE . T_EOL
+   55     | T_INT T_TIMES T_VARIABLE . T_ASSIGN T_BAND T_VARIABLE T_EOL
+
+    T_ASSIGN  shift, and go to state 203
+    T_EOL     shift, and go to state 204
+
+
+State 177
+
+   21 LINE: T_INT T_VARIABLE T_ASSIGN . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 205
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 178
+
+   36 LINE: T_INT T_VARIABLE T_LSQ . T_NUMBER T_RSQ T_EOL
+
+    T_NUMBER  shift, and go to state 206
+
+
+State 179
+
+   25 LINE: T_INT T_VARIABLE T_EOL .
+
+    $default  reduce using rule 25 (LINE)
+
+
+State 180
+
+   57 LINE: T_TIMES T_VARIABLE T_ASSIGN . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 207
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 181
+
+   43 LINE: T_VARIABLE T_PE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 208
+
+
+State 182
+
+   44 LINE: T_VARIABLE T_ME E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 209
+
+
+State 183
+
+   46 LINE: T_VARIABLE T_DE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 210
+
+
+State 184
+
+   45 LINE: T_VARIABLE T_TE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 211
+
+
+State 185
+
+   47 LINE: T_VARIABLE T_MODE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 212
+
+
+State 186
+
+   50 LINE: T_VARIABLE T_AE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 213
+
+
+State 187
+
+   48 LINE: T_VARIABLE T_OE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 214
+
+
+State 188
+
+   52 LINE: T_VARIABLE T_RSE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 215
+
+
+State 189
+
+   51 LINE: T_VARIABLE T_LSE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 216
+
+
+State 190
+
+   49 LINE: T_VARIABLE T_XE E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 217
+
+
+State 191
+
+   56 LINE: T_VARIABLE T_ASSIGN T_BAND . T_VARIABLE T_EOL
+
+    T_VARIABLE  shift, and go to state 218
+
+
+State 192
+
+   22 LINE: T_VARIABLE T_ASSIGN E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 219
+
+
+State 193
+
+   37 LINE: T_VARIABLE T_LSQ E1 . T_RSQ T_ASSIGN E1 T_EOL
+   71 E1: E1 . T_LOR E12
+  111 FACTOR: T_VARIABLE T_LSQ E1 . T_RSQ
+
+    T_LOR  shift, and go to state 61
+    T_RSQ  shift, and go to state 220
+
+
+State 194
+
+   30 LINE: T_IF T_LBRACKET E1 . T_RBRACKET LINE
+   31     | T_IF T_LBRACKET E1 . T_RBRACKET LINE T_ELSE LINE
+   32     | T_IF T_LBRACKET E1 . T_RBRACKET LINE T_ELSE T_OPEN LINES T_CLOSE
+   33     | T_IF T_LBRACKET E1 . T_RBRACKET T_OPEN LINES T_CLOSE
+   34     | T_IF T_LBRACKET E1 . T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE LINE
+   35     | T_IF T_LBRACKET E1 . T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+   71 E1: E1 . T_LOR E12
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 221
+
+
+State 195
+
+   26 LINE: T_RETURN E1 T_EOL .
+
+    $default  reduce using rule 26 (LINE)
+
+
+State 196
+
+   27 LINE: T_WHILE T_LBRACKET E1 . T_RBRACKET LINE
+   28     | T_WHILE T_LBRACKET E1 . T_RBRACKET T_OPEN LINES T_CLOSE
+   29     | T_WHILE T_LBRACKET E1 . T_RBRACKET T_OPEN T_CLOSE
+   71 E1: E1 . T_LOR E12
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 222
+
+
+State 197
+
+   39 LINE: T_FOR T_LBRACKET LINE . LINE LINE2 T_RBRACKET LINE
+   40     | T_FOR T_LBRACKET LINE . LINE LINE2 T_RBRACKET T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 223
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 198
+
+   53 LINE: T_SWITCH T_LBRACKET E1 . T_RBRACKET T_OPEN SWITCH_BODY T_CLOSE
+   71 E1: E1 . T_LOR E12
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 224
+
+
+State 199
+
+   23 LINE: AN_UNSIGNED T_VARIABLE T_ASSIGN . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 225
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 200
+
+   71 E1: E1 . T_LOR E12
+  106 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 . T_RBRACKET
+  107       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 . T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 . T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 . T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 226
+    T_COMMA     shift, and go to state 227
+
+
+State 201
+
+   11 FUNCT: T_VOID T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 11 (FUNCT)
+
+
+State 202
+
+   17 FUNCT: AN_UNSIGNED T_VARIABLE T_LBRACKET T_RBRACKET T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 17 (FUNCT)
+
+
+State 203
+
+   55 LINE: T_INT T_TIMES T_VARIABLE T_ASSIGN . T_BAND T_VARIABLE T_EOL
+
+    T_BAND  shift, and go to state 228
+
+
+State 204
+
+   54 LINE: T_INT T_TIMES T_VARIABLE T_EOL .
+
+    $default  reduce using rule 54 (LINE)
+
+
+State 205
+
+   21 LINE: T_INT T_VARIABLE T_ASSIGN E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 229
+
+
+State 206
+
+   36 LINE: T_INT T_VARIABLE T_LSQ T_NUMBER . T_RSQ T_EOL
+
+    T_RSQ  shift, and go to state 230
+
+
+State 207
+
+   57 LINE: T_TIMES T_VARIABLE T_ASSIGN E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 231
+
+
+State 208
+
+   43 LINE: T_VARIABLE T_PE E1 T_EOL .
+
+    $default  reduce using rule 43 (LINE)
+
+
+State 209
+
+   44 LINE: T_VARIABLE T_ME E1 T_EOL .
+
+    $default  reduce using rule 44 (LINE)
+
+
+State 210
+
+   46 LINE: T_VARIABLE T_DE E1 T_EOL .
+
+    $default  reduce using rule 46 (LINE)
+
+
+State 211
+
+   45 LINE: T_VARIABLE T_TE E1 T_EOL .
+
+    $default  reduce using rule 45 (LINE)
+
+
+State 212
+
+   47 LINE: T_VARIABLE T_MODE E1 T_EOL .
+
+    $default  reduce using rule 47 (LINE)
+
+
+State 213
+
+   50 LINE: T_VARIABLE T_AE E1 T_EOL .
+
+    $default  reduce using rule 50 (LINE)
+
+
+State 214
+
+   48 LINE: T_VARIABLE T_OE E1 T_EOL .
+
+    $default  reduce using rule 48 (LINE)
+
+
+State 215
+
+   52 LINE: T_VARIABLE T_RSE E1 T_EOL .
+
+    $default  reduce using rule 52 (LINE)
+
+
+State 216
+
+   51 LINE: T_VARIABLE T_LSE E1 T_EOL .
+
+    $default  reduce using rule 51 (LINE)
+
+
+State 217
+
+   49 LINE: T_VARIABLE T_XE E1 T_EOL .
+
+    $default  reduce using rule 49 (LINE)
+
+
+State 218
+
+   56 LINE: T_VARIABLE T_ASSIGN T_BAND T_VARIABLE . T_EOL
+
+    T_EOL  shift, and go to state 232
+
+
+State 219
+
+   22 LINE: T_VARIABLE T_ASSIGN E1 T_EOL .
+
+    $default  reduce using rule 22 (LINE)
+
+
+State 220
+
+   37 LINE: T_VARIABLE T_LSQ E1 T_RSQ . T_ASSIGN E1 T_EOL
+  111 FACTOR: T_VARIABLE T_LSQ E1 T_RSQ .
+
+    T_ASSIGN  shift, and go to state 233
+
+    T_ASSIGN  [reduce using rule 111 (FACTOR)]
+    $default  reduce using rule 111 (FACTOR)
+
+
+State 221
+
+   30 LINE: T_IF T_LBRACKET E1 T_RBRACKET . LINE
+   31     | T_IF T_LBRACKET E1 T_RBRACKET . LINE T_ELSE LINE
+   32     | T_IF T_LBRACKET E1 T_RBRACKET . LINE T_ELSE T_OPEN LINES T_CLOSE
+   33     | T_IF T_LBRACKET E1 T_RBRACKET . T_OPEN LINES T_CLOSE
+   34     | T_IF T_LBRACKET E1 T_RBRACKET . T_OPEN LINES T_CLOSE T_ELSE LINE
+   35     | T_IF T_LBRACKET E1 T_RBRACKET . T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_OPEN      shift, and go to state 234
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 235
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 222
+
+   27 LINE: T_WHILE T_LBRACKET E1 T_RBRACKET . LINE
+   28     | T_WHILE T_LBRACKET E1 T_RBRACKET . T_OPEN LINES T_CLOSE
+   29     | T_WHILE T_LBRACKET E1 T_RBRACKET . T_OPEN T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_OPEN      shift, and go to state 236
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 237
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 223
+
+   39 LINE: T_FOR T_LBRACKET LINE LINE . LINE2 T_RBRACKET LINE
+   40     | T_FOR T_LBRACKET LINE LINE . LINE2 T_RBRACKET T_OPEN LINES T_CLOSE
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 238
+
+    $default  reduce using rule 66 (LINE2)
+
+    LINE2   go to state 239
+    E1      go to state 240
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 224
+
+   53 LINE: T_SWITCH T_LBRACKET E1 T_RBRACKET . T_OPEN SWITCH_BODY T_CLOSE
+
+    T_OPEN  shift, and go to state 241
+
+
+State 225
+
+   23 LINE: AN_UNSIGNED T_VARIABLE T_ASSIGN E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 242
+
+
+State 226
+
+  106 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_RBRACKET .
+
+    $default  reduce using rule 106 (FACTOR)
+
+
+State 227
+
+  107 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA . E1 T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA . E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA . E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 243
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 228
+
+   55 LINE: T_INT T_TIMES T_VARIABLE T_ASSIGN T_BAND . T_VARIABLE T_EOL
+
+    T_VARIABLE  shift, and go to state 244
+
+
+State 229
+
+   21 LINE: T_INT T_VARIABLE T_ASSIGN E1 T_EOL .
+
+    $default  reduce using rule 21 (LINE)
+
+
+State 230
+
+   36 LINE: T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ . T_EOL
+
+    T_EOL  shift, and go to state 245
+
+
+State 231
+
+   57 LINE: T_TIMES T_VARIABLE T_ASSIGN E1 T_EOL .
+
+    $default  reduce using rule 57 (LINE)
+
+
+State 232
+
+   56 LINE: T_VARIABLE T_ASSIGN T_BAND T_VARIABLE T_EOL .
+
+    $default  reduce using rule 56 (LINE)
+
+
+State 233
+
+   37 LINE: T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN . E1 T_EOL
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 246
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 234
+
+   33 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN . LINES T_CLOSE
+   34     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN . LINES T_CLOSE T_ELSE LINE
+   35     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN . LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 247
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 235
+
+   30 LINE: T_IF T_LBRACKET E1 T_RBRACKET LINE .
+   31     | T_IF T_LBRACKET E1 T_RBRACKET LINE . T_ELSE LINE
+   32     | T_IF T_LBRACKET E1 T_RBRACKET LINE . T_ELSE T_OPEN LINES T_CLOSE
+
+    T_ELSE  shift, and go to state 248
+
+    T_ELSE    [reduce using rule 30 (LINE)]
+    $default  reduce using rule 30 (LINE)
+
+
+State 236
+
+   28 LINE: T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN . LINES T_CLOSE
+   29     | T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN . T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_CLOSE     shift, and go to state 249
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_CLOSE     [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+
+    LINES        go to state 250
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 237
+
+   27 LINE: T_WHILE T_LBRACKET E1 T_RBRACKET LINE .
+
+    $default  reduce using rule 27 (LINE)
+
+
+State 238
+
+   63 LINE2: T_VARIABLE . T_ASSIGN E1
+   65      | T_VARIABLE . T_LSQ E1 T_RSQ T_ASSIGN E1
+  103 FACTOR: T_VARIABLE .
+  104       | T_VARIABLE . T_LBRACKET T_RBRACKET
+  105       | T_VARIABLE . T_LBRACKET E1 T_RBRACKET
+  106       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_RBRACKET
+  107       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  108       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE . T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET
+  111       | T_VARIABLE . T_LSQ E1 T_RSQ
+  114       | T_VARIABLE . T_PP
+  115       | T_VARIABLE . T_MM
+
+    T_PP        shift, and go to state 57
+    T_MM        shift, and go to state 58
+    T_ASSIGN    shift, and go to state 251
+    T_LBRACKET  shift, and go to state 59
+    T_LSQ       shift, and go to state 252
+
+    T_ASSIGN  [reduce using rule 103 (FACTOR)]
+    $default  reduce using rule 103 (FACTOR)
+
+
+State 239
+
+   39 LINE: T_FOR T_LBRACKET LINE LINE LINE2 . T_RBRACKET LINE
+   40     | T_FOR T_LBRACKET LINE LINE LINE2 . T_RBRACKET T_OPEN LINES T_CLOSE
+
+    T_RBRACKET  shift, and go to state 253
+
+
+State 240
+
+   64 LINE2: E1 .
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+
+    $default  reduce using rule 64 (LINE2)
+
+
+State 241
+
+   53 LINE: T_SWITCH T_LBRACKET E1 T_RBRACKET T_OPEN . SWITCH_BODY T_CLOSE
+
+    T_CASE     shift, and go to state 254
+    T_DEFAULT  shift, and go to state 255
+
+    SWITCH_BODY  go to state 256
+
+
+State 242
+
+   23 LINE: AN_UNSIGNED T_VARIABLE T_ASSIGN E1 T_EOL .
+
+    $default  reduce using rule 23 (LINE)
+
+
+State 243
+
+   71 E1: E1 . T_LOR E12
+  107 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 . T_RBRACKET
+  108       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 . T_COMMA E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 . T_COMMA E1 T_COMMA IDK T_RBRACKET
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 257
+    T_COMMA     shift, and go to state 258
+
+
+State 244
+
+   55 LINE: T_INT T_TIMES T_VARIABLE T_ASSIGN T_BAND T_VARIABLE . T_EOL
+
+    T_EOL  shift, and go to state 259
+
+
+State 245
+
+   36 LINE: T_INT T_VARIABLE T_LSQ T_NUMBER T_RSQ T_EOL .
+
+    $default  reduce using rule 36 (LINE)
+
+
+State 246
+
+   37 LINE: T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN E1 . T_EOL
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+    T_EOL  shift, and go to state 260
+
+
+State 247
+
+   33 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES . T_CLOSE
+   34     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES . T_CLOSE T_ELSE LINE
+   35     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES . T_CLOSE T_ELSE T_OPEN LINES T_CLOSE
+
+    T_CLOSE  shift, and go to state 261
+
+
+State 248
+
+   31 LINE: T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE . LINE
+   32     | T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE . T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_OPEN      shift, and go to state 262
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 263
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 249
+
+   29 LINE: T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN T_CLOSE .
+
+    $default  reduce using rule 29 (LINE)
+
+
+State 250
+
+   28 LINE: T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 264
+
+
+State 251
+
+   63 LINE2: T_VARIABLE T_ASSIGN . E1
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 265
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 252
+
+   65 LINE2: T_VARIABLE T_LSQ . E1 T_RSQ T_ASSIGN E1
+  111 FACTOR: T_VARIABLE T_LSQ . E1 T_RSQ
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 266
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 253
+
+   39 LINE: T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET . LINE
+   40     | T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET . T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_OPEN      shift, and go to state 267
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 268
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 254
+
+   60 SWITCH_BODY: T_CASE . T_NUMBER T_COLON LINES SWITCH_BODY
+   61            | T_CASE . T_NUMBER T_COLON LINES
+
+    T_NUMBER  shift, and go to state 269
+
+
+State 255
+
+   62 SWITCH_BODY: T_DEFAULT . T_COLON LINES
+
+    T_COLON  shift, and go to state 270
+
+
+State 256
+
+   53 LINE: T_SWITCH T_LBRACKET E1 T_RBRACKET T_OPEN SWITCH_BODY . T_CLOSE
+
+    T_CLOSE  shift, and go to state 271
+
+
+State 257
+
+  107 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_RBRACKET .
+
+    $default  reduce using rule 107 (FACTOR)
+
+
+State 258
+
+  108 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA . E1 T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA . E1 T_COMMA IDK T_RBRACKET
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 272
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 259
+
+   55 LINE: T_INT T_TIMES T_VARIABLE T_ASSIGN T_BAND T_VARIABLE T_EOL .
+
+    $default  reduce using rule 55 (LINE)
+
+
+State 260
+
+   37 LINE: T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN E1 T_EOL .
+
+    $default  reduce using rule 37 (LINE)
+
+
+State 261
+
+   33 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE .
+   34     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE . T_ELSE LINE
+   35     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE . T_ELSE T_OPEN LINES T_CLOSE
+
+    T_ELSE  shift, and go to state 273
+
+    T_ELSE    [reduce using rule 33 (LINE)]
+    $default  reduce using rule 33 (LINE)
+
+
+State 262
+
+   32 LINE: T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 274
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 263
+
+   31 LINE: T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE LINE .
+
+    $default  reduce using rule 31 (LINE)
+
+
+State 264
+
+   28 LINE: T_WHILE T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 28 (LINE)
+
+
+State 265
+
+   63 LINE2: T_VARIABLE T_ASSIGN E1 .
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+
+    $default  reduce using rule 63 (LINE2)
+
+
+State 266
+
+   65 LINE2: T_VARIABLE T_LSQ E1 . T_RSQ T_ASSIGN E1
+   71 E1: E1 . T_LOR E12
+  111 FACTOR: T_VARIABLE T_LSQ E1 . T_RSQ
+
+    T_LOR  shift, and go to state 61
+    T_RSQ  shift, and go to state 275
+
+
+State 267
+
+   40 LINE: T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 276
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 268
+
+   39 LINE: T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET LINE .
+
+    $default  reduce using rule 39 (LINE)
+
+
+State 269
+
+   60 SWITCH_BODY: T_CASE T_NUMBER . T_COLON LINES SWITCH_BODY
+   61            | T_CASE T_NUMBER . T_COLON LINES
+
+    T_COLON  shift, and go to state 277
+
+
+State 270
+
+   62 SWITCH_BODY: T_DEFAULT T_COLON . LINES
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 278
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 271
+
+   53 LINE: T_SWITCH T_LBRACKET E1 T_RBRACKET T_OPEN SWITCH_BODY T_CLOSE .
+
+    $default  reduce using rule 53 (LINE)
+
+
+State 272
+
+   71 E1: E1 . T_LOR E12
+  108 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 . T_RBRACKET
+  109       | T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 . T_COMMA IDK T_RBRACKET
+
+    T_LOR       shift, and go to state 61
+    T_RBRACKET  shift, and go to state 279
+    T_COMMA     shift, and go to state 280
+
+
+State 273
+
+   34 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE . LINE
+   35     | T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE . T_OPEN LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_OPEN      shift, and go to state 281
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINE         go to state 282
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 274
+
+   32 LINE: T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 283
+
+
+State 275
+
+   65 LINE2: T_VARIABLE T_LSQ E1 T_RSQ . T_ASSIGN E1
+  111 FACTOR: T_VARIABLE T_LSQ E1 T_RSQ .
+
+    T_ASSIGN  shift, and go to state 284
+
+    T_ASSIGN  [reduce using rule 111 (FACTOR)]
+    $default  reduce using rule 111 (FACTOR)
+
+
+State 276
+
+   40 LINE: T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 285
+
+
+State 277
+
+   60 SWITCH_BODY: T_CASE T_NUMBER T_COLON . LINES SWITCH_BODY
+   61            | T_CASE T_NUMBER T_COLON . LINES
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 286
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 278
+
+   62 SWITCH_BODY: T_DEFAULT T_COLON LINES .
+
+    $default  reduce using rule 62 (SWITCH_BODY)
+
+
+State 279
+
+  108 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_RBRACKET .
+
+    $default  reduce using rule 108 (FACTOR)
+
+
+State 280
+
+  109 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA . IDK T_RBRACKET
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 287
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    IDK     go to state 288
+    FACTOR  go to state 39
+
+
+State 281
+
+   35 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN . LINES T_CLOSE
+
+    T_INT       shift, and go to state 92
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 93
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 94
+    T_IF        shift, and go to state 95
+    T_RETURN    shift, and go to state 96
+    T_WHILE     shift, and go to state 97
+    T_FOR       shift, and go to state 98
+    T_BREAK     shift, and go to state 99
+    T_CONT      shift, and go to state 100
+    T_SWITCH    shift, and go to state 101
+    T_UNSIGNED  shift, and go to state 4
+
+    T_INT       [reduce using rule 38 (LINE)]
+    T_PP        [reduce using rule 38 (LINE)]
+    T_MM        [reduce using rule 38 (LINE)]
+    T_TIMES     [reduce using rule 38 (LINE)]
+    T_MINUS     [reduce using rule 38 (LINE)]
+    T_LBRACKET  [reduce using rule 38 (LINE)]
+    T_NUMBER    [reduce using rule 38 (LINE)]
+    T_VARIABLE  [reduce using rule 38 (LINE)]
+    T_IF        [reduce using rule 38 (LINE)]
+    T_RETURN    [reduce using rule 38 (LINE)]
+    T_WHILE     [reduce using rule 38 (LINE)]
+    T_FOR       [reduce using rule 38 (LINE)]
+    T_BREAK     [reduce using rule 38 (LINE)]
+    T_CONT      [reduce using rule 38 (LINE)]
+    T_SWITCH    [reduce using rule 38 (LINE)]
+    T_UNSIGNED  [reduce using rule 38 (LINE)]
+    $default    reduce using rule 38 (LINE)
+
+    LINES        go to state 289
+    LINE         go to state 103
+    AN_UNSIGNED  go to state 104
+    E1           go to state 105
+    E12          go to state 29
+    E21          go to state 30
+    E2           go to state 31
+    E3           go to state 32
+    E4           go to state 33
+    C1           go to state 34
+    C2           go to state 35
+    EXPR         go to state 36
+    TERM         go to state 37
+    UNARY        go to state 38
+    FACTOR       go to state 39
+
+
+State 282
+
+   34 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE LINE .
+
+    $default  reduce using rule 34 (LINE)
+
+
+State 283
+
+   32 LINE: T_IF T_LBRACKET E1 T_RBRACKET LINE T_ELSE T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 32 (LINE)
+
+
+State 284
+
+   65 LINE2: T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN . E1
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 290
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 285
+
+   40 LINE: T_FOR T_LBRACKET LINE LINE LINE2 T_RBRACKET T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 40 (LINE)
+
+
+State 286
+
+   60 SWITCH_BODY: T_CASE T_NUMBER T_COLON LINES . SWITCH_BODY
+   61            | T_CASE T_NUMBER T_COLON LINES .
+
+    T_CASE     shift, and go to state 254
+    T_DEFAULT  shift, and go to state 255
+
+    $default  reduce using rule 61 (SWITCH_BODY)
+
+    SWITCH_BODY  go to state 291
+
+
+State 287
+
+   71 E1: E1 . T_LOR E12
+  100 IDK: E1 .
+
+    T_LOR  shift, and go to state 61
+
+    $default  reduce using rule 100 (IDK)
+
+
+State 288
+
+  101 IDK: IDK . T_COMMA E1
+  109 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK . T_RBRACKET
+
+    T_RBRACKET  shift, and go to state 292
+    T_COMMA     shift, and go to state 293
+
+
+State 289
+
+   35 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES . T_CLOSE
+
+    T_CLOSE  shift, and go to state 294
+
+
+State 290
+
+   65 LINE2: T_VARIABLE T_LSQ E1 T_RSQ T_ASSIGN E1 .
+   71 E1: E1 . T_LOR E12
+
+    T_LOR  shift, and go to state 61
+
+    $default  reduce using rule 65 (LINE2)
+
+
+State 291
+
+   60 SWITCH_BODY: T_CASE T_NUMBER T_COLON LINES SWITCH_BODY .
+
+    $default  reduce using rule 60 (SWITCH_BODY)
+
+
+State 292
+
+  109 FACTOR: T_VARIABLE T_LBRACKET E1 T_COMMA E1 T_COMMA E1 T_COMMA E1 T_COMMA IDK T_RBRACKET .
+
+    $default  reduce using rule 109 (FACTOR)
+
+
+State 293
+
+  101 IDK: IDK T_COMMA . E1
+
+    T_PP        shift, and go to state 21
+    T_MM        shift, and go to state 22
+    T_TIMES     shift, and go to state 23
+    T_MINUS     shift, and go to state 24
+    T_LBRACKET  shift, and go to state 25
+    T_NUMBER    shift, and go to state 26
+    T_VARIABLE  shift, and go to state 27
+
+    E1      go to state 295
+    E12     go to state 29
+    E21     go to state 30
+    E2      go to state 31
+    E3      go to state 32
+    E4      go to state 33
+    C1      go to state 34
+    C2      go to state 35
+    EXPR    go to state 36
+    TERM    go to state 37
+    UNARY   go to state 38
+    FACTOR  go to state 39
+
+
+State 294
+
+   35 LINE: T_IF T_LBRACKET E1 T_RBRACKET T_OPEN LINES T_CLOSE T_ELSE T_OPEN LINES T_CLOSE .
+
+    $default  reduce using rule 35 (LINE)
+
+
+State 295
+
+   71 E1: E1 . T_LOR E12
+  101 IDK: IDK T_COMMA E1 .
+
+    T_LOR  shift, and go to state 61
+
+    $default  reduce using rule 101 (IDK)
